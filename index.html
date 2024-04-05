@@ -12,19 +12,18 @@
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>Task Board</title>
+  <title>Task Manager</title>
 </head>
 
 <body>
   <header class="p-4 mb-4 text-center border-bottom border-5">
-    <h1 class="display-3">Task Board</h1>
-    <p class="lead">A simple Kanban board for task management</p>
+    <h1 class="display-3">Task Manager</h1>
+    <p class="lead">A helpful tool to track your task progress</p>
   </header>
   <div class="container">
     <div class="text-center mb-5">
       <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
-    <!-- Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -34,19 +33,25 @@
           </div>
           <div class="modal-body">
             <!-- form elements -->
-            <form>
+            <form id="addTaskForm">
               <div class="mb-3">
                 <label for="taskName" class="form-label">Task Name</label>
                 <input type="text" class="form-control" id="taskName" required>
               </div>
-              <!-- form elements -->
+              <div class="mb-3">
+                <label for="dueDate" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="dueDate" required>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3"></textarea>
+              </div>
               <button type="submit" class="btn btn-primary">Add</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <!-- End of Modal -->
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">

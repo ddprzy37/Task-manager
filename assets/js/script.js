@@ -1,5 +1,5 @@
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 function saveTasks() {
@@ -9,7 +9,7 @@ function saveTasks() {
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
     console.log("Generating task ID...");
-    let nextId = JSON.parse(localStorage.getItem("nextId"));
+    let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
     nextId++;
     localStorage.setItem("nextId", nextId);
     return nextId;
@@ -43,14 +43,23 @@ function createTaskCard(task) {
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
     console.log("Rendering task list...");
+
+    // Check if taskList is null or undefined
+    if (!taskList) {
+        console.error("Task list is null or undefined.");
+        return;
+    }
+
+    // Clear the task cards from each lane
     $('#todo-cards').empty();
     $('#in-progress-cards').empty();
     $('#done-cards').empty();
 
-    taskList.forEach(function(task){
+    // Render each task card based on its progress
+    taskList.forEach(function(task) {
         const taskCard = createTaskCard(task);
 
-        switch(task.progress) {
+        switch (task.progress) {
             case 'todo':
                 $('#todo-cards').append(taskCard);
                 break;
@@ -65,15 +74,16 @@ function renderTaskList() {
         }
     });
 
+    // Make the task cards draggable
     $('.task-card').draggable({
         revert: 'invalid',
         stack: '.task-card',
         cursor: 'move',
         opacity: 0.7,
         helper: 'clone',
-    })
-    console.log("Task list rendering completed.");
+    });
 
+    console.log("Task list rendering completed.");
 }
 
 // Todo: create a function to handle adding a new task
@@ -127,5 +137,28 @@ function initializeTaskBoard() {
 }
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
-
+    initializeTaskBoard();
 });
+
+// if (typeof(Storage) !== "undefined") {
+//     console.log("Local storage is supported.");
+// } else {
+//     console.log("Local storage is not supported.");
+// }
+
+// $(document).ready(function () {
+//     // Initialize taskList and nextId if not present in local storage
+//     if (!taskList) {
+//         taskList = [];
+//         saveTasks();
+//     }
+//     if (!nextId) {
+//         nextId = 1;
+//         saveTasks();
+//     }
+
+//     // Initialize the task board
+//     initializeTaskBoard();
+// });
+
+
