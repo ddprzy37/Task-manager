@@ -58,7 +58,7 @@ function renderTaskList() {
     // Render each task card based on its progress
     taskList.forEach(function(task) {
         const taskCard = createTaskCard(task);
-
+        console.log(task);
         switch (task.progress) {
             case 'todo':
                 $('#todo-cards').append(taskCard);
@@ -82,8 +82,24 @@ function renderTaskList() {
         opacity: 0.7,
         helper: 'clone',
     });
+    // $('.task-card').draggable();
+    //draggable
+        // opacity: 0.7,
+        // zIndex: 100,
+        // // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+        // helper: function (e) {
+        //   // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
+        //   const original = $(e.target).hasClass('ui-draggable')
+        //     ? $(e.target)
+        //     : $(e.target).closest('.ui-draggable');
+        //   // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
+        //   return original.clone().css({
+        //     width: original.outerWidth(),
+        //   });
+        // },
+    //   });
 
-    console.log("Task list rendering completed.");
+    // console.log("Task list rendering completed.");
 }
 
 // Todo: create a function to handle adding a new task
@@ -116,7 +132,17 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
+    event.preventDefault();
 
+    const taskIdToDelete = $(event.target).closest('.task-card').data('taskId');
+
+    const taskIndex = taskList.findIndex(task => task.id === taskIdToDelete);
+
+    if (taskIndex !== -1) {
+        taskList.splice(taskIndex, 1);
+        saveTasks();
+        renderTaskList();
+    }
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
