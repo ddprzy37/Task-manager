@@ -16,27 +16,30 @@ function generateTaskId() {
 }
 
 // function to create a task card
-// Todo: create a function to create a task card
 function createTaskCard(task) {
     console.log("Creating task card for task:", task);
-    const card = document.createElement('div');
-    card.classList.add('task-card');
-    card.dataset.taskId = task.id;
+    const card = $('<div>').addClass('task-card').attr('data-task-id', task.id);
 
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
+    const cardBody = $('<div>').addClass('card-body');
 
-    const title = document.createElement('h5');
-    title.classList.add('card-title');
-    title.textContent = task.name;
+    const title = $('<h5>').addClass('card-title').text(task.name);
 
-    const progress = document.createElement('p');
-    progress.classList.add('card-text');
-    progress.textContent = "Progress: " + task.progress;
+    const progress = $('<p>').addClass('card-text').text("Progress: " + task.progress);
 
-    cardBody.appendChild(title);
-    cardBody.appendChild(progress);
-    card.appendChild(cardBody);
+    cardBody.append(title, progress);
+
+    // Create delete button
+    const deleteBtn = $('<button>')
+        .addClass('btn btn-danger delete')
+        .text('Delete')
+        .attr('data-task-id', task.id)
+        .on('click', function() {
+            handleDeleteTask(task.id);
+        });
+
+    cardBody.append(deleteBtn);
+
+    card.append(cardBody);
 
     // Check if due date is present and set color based on due date
     if (task.dueDate) {
@@ -46,15 +49,16 @@ function createTaskCard(task) {
 
         if (daysUntilDue < 0) {
             // Task is overdue (red)
-            card.classList.add('bg-danger');
+            card.addClass('bg-danger');
         } else if (daysUntilDue <= 3) {
             // Task is nearing the deadline (yellow)
-            card.classList.add('bg-warning');
+            card.addClass('bg-warning');
         }
     }
 
     return card;
 }
+
 
 
 //  function to render the task list and make cards draggable
@@ -143,7 +147,7 @@ function handleAddTask(event){
 
 // function to handle deleting a task
 function handleDeleteTask(event) {
-    event.preventDefault();
+   event.preventDefault(); // Stop the event from bubbling up
 
     console.log("Handling task deletion...");
 
@@ -152,9 +156,7 @@ function handleDeleteTask(event) {
     const taskId = taskCard.data('taskId');
 
     // Find the index of the task with the corresponding ID in the taskList array
-    const taskIndex = taskList.findIndex(function(task) {
-        return task.id === taskId;
-    });
+    const taskIndex = taskList.findIndex(task => task.id === taskId);
 
     if (taskIndex !== -1) {
         // Remove the task from the taskList array
@@ -169,6 +171,7 @@ function handleDeleteTask(event) {
         console.log("Task deletion handled successfully.");
     }
 }
+
 
 
 // function to handle dropping a task into a new status lane
