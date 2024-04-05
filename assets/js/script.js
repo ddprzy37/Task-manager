@@ -16,6 +16,7 @@ function generateTaskId() {
 }
 
 // function to create a task card
+// Todo: create a function to create a task card
 function createTaskCard(task) {
     console.log("Creating task card for task:", task);
     const card = document.createElement('div');
@@ -37,8 +38,24 @@ function createTaskCard(task) {
     cardBody.appendChild(progress);
     card.appendChild(cardBody);
 
+    // Check if due date is present and set color based on due date
+    if (task.dueDate) {
+        const dueDate = dayjs(task.dueDate);
+        const today = dayjs();
+        const daysUntilDue = dueDate.diff(today, 'day');
+
+        if (daysUntilDue < 0) {
+            // Task is overdue (red)
+            card.classList.add('bg-danger');
+        } else if (daysUntilDue <= 3) {
+            // Task is nearing the deadline (yellow)
+            card.classList.add('bg-warning');
+        }
+    }
+
     return card;
 }
+
 
 //  function to render the task list and make cards draggable
 function renderTaskList() {
