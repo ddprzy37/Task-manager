@@ -6,7 +6,7 @@ function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(taskList));
     localStorage.setItem("nextId", nextId);
 }
-// Todo: create a function to generate a unique task id
+// function to generate a unique task id
 function generateTaskId() {
     console.log("Generating task ID...");
     let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
@@ -15,7 +15,7 @@ function generateTaskId() {
     return nextId;
 }
 
-// Todo: create a function to create a task card
+// function to create a task card
 function createTaskCard(task) {
     console.log("Creating task card for task:", task);
     const card = document.createElement('div');
@@ -40,7 +40,7 @@ function createTaskCard(task) {
     return card;
 }
 
-// Todo: create a function to render the task list and make cards draggable
+//  function to render the task list and make cards draggable
 function renderTaskList() {
     console.log("Rendering task list...");
 
@@ -82,27 +82,9 @@ function renderTaskList() {
         opacity: 0.7,
         helper: 'clone',
     });
-    // $('.task-card').draggable();
-    //draggable
-        // opacity: 0.7,
-        // zIndex: 100,
-        // // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
-        // helper: function (e) {
-        //   // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
-        //   const original = $(e.target).hasClass('ui-draggable')
-        //     ? $(e.target)
-        //     : $(e.target).closest('.ui-draggable');
-        //   // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
-        //   return original.clone().css({
-        //     width: original.outerWidth(),
-        //   });
-        // },
-    //   });
-
-    // console.log("Task list rendering completed.");
 }
 
-// Todo: create a function to handle adding a new task
+// function to handle adding a new task
 function handleAddTask(event){
     event.preventDefault();
 
@@ -130,7 +112,7 @@ function handleAddTask(event){
 
 }
 
-// Todo: create a function to handle deleting a task
+// function to handle deleting a task
 function handleDeleteTask(event){
     event.preventDefault();
 
@@ -145,10 +127,52 @@ function handleDeleteTask(event){
     }
 }
 
-// Todo: create a function to handle dropping a task into a new status lane
+// function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+    
+    event.preventDefault();
 
+    // Identify the task being dropped
+    const taskId = ui.draggable.data('taskId');
+
+    // Identify the drop target (lane ID)
+    const dropTargetId = $(event.target).attr('id');
+
+    // Determine the new progress status based on the drop target
+    let newProgress;
+    switch (dropTargetId) {
+        case 'to-do':
+            newProgress = 'todo';
+            break;
+        case 'in-progress':
+            newProgress = 'in-progress';
+            break;
+        case 'done':
+            newProgress = 'done';
+            break;
+        default:
+            console.error('Invalid drop target.');
+            return;
+    }
+
+    // Find the dropped task in the taskList array
+    const droppedTaskIndex = taskList.findIndex(task => task.id === taskId);
+
+    // If the dropped task is found
+    if (droppedTaskIndex !== -1) {
+        // Update the progress status of the dropped task
+        taskList[droppedTaskIndex].progress = newProgress;
+
+        // Save the updated taskList to localStorage
+        saveTasks();
+
+        // Re-render the task list to reflect the changes
+        renderTaskList();
+    } else {
+        console.error('Dropped task not found.');
+    }
 }
+
 
 function initializeTaskBoard() {
 
