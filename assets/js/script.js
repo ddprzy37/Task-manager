@@ -91,10 +91,14 @@ function handleAddTask(event){
     console.log("Handling task addition...");
 
     const taskName = $("#taskName").val();
+    const dueDate = $("#dueDate").val();
+    const description = $("#description").val();
 
     const newTask = {
         id: generateTaskId(),
         name: taskName,
+        dueDate: dueDate,
+        description: description,
         progress: "todo"
     };
 
@@ -106,11 +110,14 @@ function handleAddTask(event){
 
     $("#formModal").modal("hide");
 
+    // Clear input fields after submission
     $("#taskName").val("");
+    $("#dueDate").val("");
+    $("#description").val("");
 
     console.log("Task addition handled successfully.");
-
 }
+
 
 // function to handle deleting a task
 function handleDeleteTask(event){
