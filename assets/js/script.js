@@ -98,8 +98,13 @@ function renderTaskList() {
         cursor: 'move',
         opacity: 0.7,
         helper: 'clone',
+        start: function(event, ui) {
+            console.log("Dragging started...");
+        }
     });
+    
 }
+
 
 // function to handle adding a new task
 function handleAddTask(event){
@@ -137,19 +142,34 @@ function handleAddTask(event){
 
 
 // function to handle deleting a task
-function handleDeleteTask(event){
+function handleDeleteTask(event) {
     event.preventDefault();
 
-    const taskIdToDelete = $(event.target).closest('.task-card').data('taskId');
+    console.log("Handling task deletion...");
 
-    const taskIndex = taskList.findIndex(task => task.id === taskIdToDelete);
+    // Get the task card element that contains the delete button
+    const taskCard = $(event.target).closest('.task-card');
+    const taskId = taskCard.data('taskId');
+
+    // Find the index of the task with the corresponding ID in the taskList array
+    const taskIndex = taskList.findIndex(function(task) {
+        return task.id === taskId;
+    });
 
     if (taskIndex !== -1) {
+        // Remove the task from the taskList array
         taskList.splice(taskIndex, 1);
+
+        // Save the updated taskList to localStorage
         saveTasks();
-        renderTaskList();
+
+        // Remove the task card element from the task board
+        taskCard.remove();
+
+        console.log("Task deletion handled successfully.");
     }
 }
+
 
 // function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
@@ -209,30 +229,11 @@ function initializeTaskBoard() {
         drop: handleDrop
     });
 }
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
+// when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
     initializeTaskBoard();
 });
 
-// if (typeof(Storage) !== "undefined") {
-//     console.log("Local storage is supported.");
-// } else {
-//     console.log("Local storage is not supported.");
-// }
 
-// $(document).ready(function () {
-//     // Initialize taskList and nextId if not present in local storage
-//     if (!taskList) {
-//         taskList = [];
-//         saveTasks();
-//     }
-//     if (!nextId) {
-//         nextId = 1;
-//         saveTasks();
-//     }
-
-//     // Initialize the task board
-//     initializeTaskBoard();
-// });
 
 
