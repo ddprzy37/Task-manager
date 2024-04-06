@@ -34,7 +34,7 @@ https://ddprzy37.github.io/Task-manager/
 ![Modal example (filled out)](./assets/images/Modal%20example%202.png)
 ![Task not due soon](./assets/images/Task%20not%20due%20soon..png)
 ![Task due soon (yellow)](./assets/images/Task%20due%20soon.png)
-![Task overdue](./assets/images/Task%20is%20overdue.png)
+![Task overdue (red)](./assets/images/Task%20is%20overdue.png)
 ![Task in progress](./assets/images/Task%20is%20in%20progress.png)
 ![Task completed](./assets/images/Task%20completed.png)
 

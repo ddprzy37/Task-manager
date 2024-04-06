@@ -203,16 +203,18 @@ function handleDrop(event, ui) {
     }
 
     // Find the dropped task in the taskList array
-    const droppedTaskIndex = taskList.findIndex(task => task.id === taskId);
-
+    const droppedTaskIndex = taskList.findIndex(function(task) {
+        return task.id === taskId;
+    });
+    
     // If the dropped task is found
     if (droppedTaskIndex !== -1) {
         // Update the progress status of the dropped task
         taskList[droppedTaskIndex].progress = newProgress;
-
+    
         // Save the updated taskList to localStorage
         saveTasks();
-
+    
         // Re-render the task list to reflect the changes
         renderTaskList();
     } else {
