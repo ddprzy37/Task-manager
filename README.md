@@ -25,8 +25,10 @@ Technologies used:
 * Day.js
 
 License:
-
 This project is licensed under the MIT license.
+
+Link to live site:
+https://ddprzy37.github.io/Task-manager/
 
 ![Modal example (empty)](./assets/images/Modal%20example.png)
 ![Modal example (filled out)](./assets/images/Modal%20example%202.png)
