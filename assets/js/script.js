@@ -10,10 +10,10 @@ function saveTasks() {
 function generateTaskId() {
     console.log("Generating task ID...");
     let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
-    nextId++;
-    localStorage.setItem("nextId", nextId);
+    localStorage.setItem("nextId", nextId + 1); // Update nextId in localStorage
     return nextId;
 }
+
 
 // function to create a task card
 function createTaskCard(task) {
