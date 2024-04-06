@@ -8,12 +8,14 @@ Features
 * Add tasks with due dates and descriptions
 * Move tasks between To Do, In Progress, and Done columns
 * Color-coded when tasks are nearing the deadline or are overdue
+* Delete tasks from the board
 
 Usage:
 
 * Click on the "Add Task" button to add a new task. Fill in the task name, due date, and description in the modal.
 * Drag and drop tasks between the To Do, In Progress, and Done columns to update their progress.
 * Tasks will be color-coded to indicate if they are nearing the deadline (yellow) or overdue (red).
+* Click on the delete button next to a task to remove it from the board.
 
 Technologies used:
 * HTML

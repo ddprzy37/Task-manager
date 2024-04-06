@@ -16,6 +16,7 @@ function generateTaskId() {
 
 
 // function to create a task card
+// function to create a task card
 function createTaskCard(task) {
     console.log("Creating task card for task:", task);
     const card = $('<div>').addClass('task-card').attr('data-task-id', task.id);
@@ -33,8 +34,8 @@ function createTaskCard(task) {
         .addClass('btn btn-danger delete')
         .text('Delete')
         .attr('data-task-id', task.id)
-        .on('click', function() {
-            handleDeleteTask(task.id);
+        .on('click', function(event) {
+            handleDeleteTask(event); // Corrected event handler
         });
 
     cardBody.append(deleteBtn);
@@ -58,6 +59,7 @@ function createTaskCard(task) {
 
     return card;
 }
+
 
 
 
