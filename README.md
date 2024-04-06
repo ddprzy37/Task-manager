@@ -40,7 +40,5 @@ https://ddprzy37.github.io/Task-manager/
 ![Task in progress](./assets/images/Task%20is%20in%20progress.png)
 ![Task completed](./assets/images/Task%20completed.png)
 
-Link to application:
-https://ddprzy37.github.io/Dayel-s-blog/
 Author:
 Dayel Przybyla
