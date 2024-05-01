@@ -15,7 +15,7 @@ function generateTaskId() {
 }
 
 
-// function to create a task card
+
 // function to create a task card
 function createTaskCard(task) {
     console.log("Creating task card for task:", task);
